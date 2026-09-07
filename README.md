@@ -65,6 +65,8 @@ After a run, inspect these files:
 - `artifacts/forecast.png` - Visual comparison of actual and predicted holdout prices.
 - `artifacts/latest_prediction.json` - The model's next-close estimate based on the latest available row.
 - `artifacts/model.joblib` - Saved pipeline and feature list for reuse.
+- `artifacts/price_history.csv` - The cleaned price history used for that experiment.
+- `artifacts/dataset_summary.json` - Data source, date range, observation count, and closing-price summary.
 
 For a credible conclusion, report whether the model beats the naive baseline. A model that does not beat the baseline should be described honestly; that is still a valid experimental result.
 
@@ -97,3 +99,9 @@ pytest -q
 5. Create a GitHub repository, add it as `origin`, commit, and push.
 
 The report template in `docs/PROJECT_REPORT_TEMPLATE.md` lists the evidence to capture after your first successful experiment.
+
+## Submission material
+
+- `docs/DATASET.md` documents the dataset source, cleaning steps, and reproducibility command.
+- `docs/MODEL_CARD.md` documents the intended use, evaluation method, limitations, and safeguards.
+- `reports/Stock_Price_Prediction_Report.docx` and `.pdf` contain the final report created from the verified experiment outputs.

@@ -11,6 +11,7 @@ htmlcov/
 data/*.csv
 data/*.xlsx
 artifacts/
+tmp/
 
 # Editors and operating systems
 .vscode/

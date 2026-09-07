@@ -48,6 +48,7 @@ def train_command(args: argparse.Namespace) -> None:
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    prices.to_csv(output_dir / "price_history.csv", index_label="Date")
     result.predictions.to_csv(output_dir / "predictions.csv", index_label="Date")
     _write_plot(result.predictions, output_dir / "forecast.png")
 
@@ -62,7 +63,23 @@ def train_command(args: argparse.Namespace) -> None:
         "test_rows": result.test_rows,
         "metrics": result.metrics,
     }
+    dataset_summary = {
+        "source": source,
+        "date_range": {
+            "first_observation": str(prices.index.min().date()),
+            "last_observation": str(prices.index.max().date()),
+        },
+        "observations": int(len(prices)),
+        "close_price": {
+            "minimum": float(prices["Close"].min()),
+            "maximum": float(prices["Close"].max()),
+            "mean": float(prices["Close"].mean()),
+        },
+    }
     (output_dir / "metrics.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    (output_dir / "dataset_summary.json").write_text(
+        json.dumps(dataset_summary, indent=2), encoding="utf-8"
+    )
     (output_dir / "latest_prediction.json").write_text(
         json.dumps(
             {

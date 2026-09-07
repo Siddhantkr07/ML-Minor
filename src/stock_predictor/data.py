@@ -38,8 +38,9 @@ def validate_price_history(frame: pd.DataFrame) -> pd.DataFrame:
         raise ValueError("The dataset must include a Date column or a datetime index.")
 
     prepared.index = pd.to_datetime(prepared.index, errors="coerce")
-    prepared = prepared.loc[~prepared.index.isna()].sort_index()
+    prepared = prepared.loc[~prepared.index.isna()]
     prepared = prepared.loc[~prepared.index.duplicated(keep="last")]
+    prepared = prepared.sort_index()
     prepared["Close"] = pd.to_numeric(prepared["Close"], errors="coerce")
     prepared = prepared.dropna(subset=["Close"])
 
